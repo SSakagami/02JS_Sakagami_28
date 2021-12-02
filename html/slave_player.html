@@ -45,13 +45,13 @@
 </div>
 <!-- カイジ側手札 -->
 <div>
-<ul id="cards">
-  <li id="c1_btn"><img src="../img/CITIZEN.png" alt="" class=ecard>
+<ul id="cards" class=tefudaul>
+  <li id="c1_btn" class=tefudali><img src="../img/CITIZEN.png" alt="" class=ecard>
   </li>
-  <li id="c2_btn"><img src="../img/CITIZEN.png" alt=""class=ecard></li>
-  <li id="s_btn"><img src="../img/SLAVE.png" alt=""class=ecard></li>
-  <li id="c3_btn"><img src="../img/CITIZEN.png" alt=""class=ecard></li>
-  <li id="c4_btn"><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+  <li id="c2_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+  <li id="s_btn" class=tefudali><img src="../img/SLAVE.png" alt=""class=ecard></li>
+  <li id="c3_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+  <li id="c4_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
 </ul>
 </div>
 
@@ -62,6 +62,19 @@
 <div class=center> <div class=SETbutton id="REbtn">“再戦”</div> </div>
 <!-- <img src="./img/kaiji_lose.jpeg" alt=""> -->
 <!-- <img src="./img/kaiji_win.jpeg" alt=""> -->
+
+勝敗
+<input class=inputform type="text" id="key">
+<textarea class=inputtextarea id="memo"></textarea>
+<ul class=resultul>
+    <li class=resultli id="save">Save</li>
+    <li class=resultli id="clear">Clear</li>
+</ul>
+
+<table class=recordtable id="list">
+  <!-- ここに追加データが挿入される -->
+  </table>
+
 
 </main>
 
@@ -237,7 +250,6 @@ $("#c2_btn").on("click",function(){
   });
 });
 
-
 //-----C3--------------------------------
 $("#c3_btn").on("click",function(){
 
@@ -366,8 +378,6 @@ $("#c4_btn").on("click",function(){
   });
 });
 
-
-
 //-----SLAVE----------------------------------
 $("#s_btn").on("click",function(){
 // 両者カードをセット
@@ -432,6 +442,30 @@ $("#s_btn").on("click",function(){
 });
 
 
+//1.Save クリックイベント
+$("#save").on("click",function(){
+console.log("CLICK!!");
+    const key = $("#key").val();
+    const value = $("#memo").val();
+    localStorage.setItem(key,value);
+    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
+    $("#list").append(html);
+});
+
+//2.clear クリックイベント
+$("#clear").on("click",function(){
+    localStorage.clear();
+    $("#list").empty();
+});
+
+//3.ページ読み込み：保存データ取得表示
+for(let i=0; i<localStorage.length; i++){
+    const key   = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
+    $("#list").append(html);
+}
+
 //-----利根川用カウントアップ----------------------------------
 j=j+1;
 
@@ -443,6 +477,35 @@ $("#REbtn").on("click",function(){
 });
 
 
+
 </script>
+
+<script>
+//1.Save クリックイベント
+$("#save").on("click",function(){
+console.log("CLICK!!");
+    const key = $("#key").val();
+    const value = $("#memo").val();
+    localStorage.setItem(key,value);
+    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
+    $("#list").append(html);
+});
+
+//2.clear クリックイベント
+$("#clear").on("click",function(){
+    localStorage.clear();
+    $("#list").empty();
+});
+
+//3.ページ読み込み：保存データ取得表示
+for(let i=0; i<localStorage.length; i++){
+    const key   = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
+    $("#list").append(html);
+}
+
+</script>
+
 </body>
 </html>
