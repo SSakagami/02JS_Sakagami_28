@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="../js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="../css/sample_emp.css">
+<link href="https://fonts.googleapis.com/css?family=Bangers" rel=stylesheet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+<title>Emperorモード</title>
+</head>
+<body>
+
+<header>
+  <div class=container>
+    <!-- <div><a href="./kaiji.html"> <img class=titlepic src="./img/titlekaiji.jpeg" alt=""> </a> </div> -->
+    <h1 class=header>E-Card Emperor mode</h1>
+    <div class=header><a href="../kaiji.html">HOME</a></div>
+  </div>
+</header>
+
+<main>
+<!-- 帝愛側 -->
+<div class=teiai>  
+  <div class=teiaitonegawa><div>帝愛幹部 利根川</div>
+    <div><img class=picsize id="tonegawa" src="../img/tonegawa_draw.jpeg" alt=""> </div>
+    <div>「<span id="tonecomment" class=teiaifont>自分の出すカードを選択しな</span>」</div>
+  </div>
+  <div><img src="" alt="" id="tonecard" class=cardsize></div>
+</div>
+<!-- 結果表示 -->
+<div class=center><div class=judge  id="judgment">  </div>   </div>
+
+<!-- <div class=center><div class=SETbutton id="reload_btn">  </div>   </div> -->
+
+<!-- カイジ -->
+<div class=kuzu>   
+  <div class=kuzukaiji><div>カイジ</div>
+    <div><img id="kaiji" class=picsize src="../img/kaiji_original.jpeg" alt=""> </div>
+    <div>「<span id=kaijicomment class=teiaifont>負けられないんだよ、死んだ仲間の分まで</span>」</div>
+  </div>
+  <div> <img src="" alt="" id="kaijicard" class=cardsize> </div>
+</div>
+<!-- カイジ側手札 -->
+<div>
+<ul id="cards">
+  <li id="c1_btn"><img src="../img/CITIZEN.png" alt="" class=ecard>
+  </li>
+  <li id="c2_btn"><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+  <li id="s_btn"><img src="../img/Emperor.png" alt=""class=ecard></li>
+  <li id="c3_btn"><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+  <li id="c4_btn"><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+</ul>
+</div>
+
+
+
+<div class=center><div class=SETbutton id="start_btn"> “Gamestart” </div>   </div>
+<div class=center> <div class=SETbutton id="SETbtn">カードを選択</div> </div>
+<div class=center> <div class=SETbutton id="REbtn">“再戦”</div> </div>
+<!-- <img src="./img/kaiji_lose.jpeg" alt=""> -->
+<!-- <img src="./img/kaiji_win.jpeg" alt=""> -->
+
+</main>
+
+<footer class=footerback> <div class=footerfont> 本サイトは講習用に作成したものであり、私的利用を目的としています。</div></footer>
+
+<script>
+// 利根川のカードの出す順を決定()-----------------------------
+var randoms = [];
+var min = 1, max = 5;
+
+for(i = min; i <= max; i++){
+  while(true){
+    var tmp = intRandom(min, max);
+    if(!randoms.includes(tmp)){
+      randoms.push(tmp);
+      break;
+    }
+  }
+}
+/** min以上max以下の整数値の乱数を返す */
+function intRandom(min, max){
+  return Math.floor( Math.random() * (max - min + 1)) + min;
+}
+
+console.log(randoms);
+
+//------------準備項目----------------------------------
+let j=0;
+$("#SETbtn").hide();
+$("#REbtn").hide();
+$("#cards").hide();
+$("#judgment").hide();
+
+//------------Game開始----------------------------------
+$("#start_btn").on("click",function(){//GameStartかカード再選択を押す
+  $("#start_btn").hide();
+  let com = randoms[j]; //利根川手札をセット
+  console.log(com);
+  $("#SETbtn").show();
+  $("#cards").show();
+  $("#SETbtn").text("カードを選択");
+  $("#judgment").hide();
+  $("#kaijicard").hide();
+  $("#tonecard").hide();
+  $("#tonecomment").text("自分の出すカードを選択しな");
+  $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
+
+//---------C1--------------------------------------------
+$("#c1_btn").on("click",function(){
+// 両者カードをセット
+  $("#SETbtn").text("SET");
+  
+  $("#SETbtn").on("click",function(){//SETボタン押す
+    $('#kaijicard').attr("src","../img/cardback.jpeg");
+    $('#tonecard').attr("src","../img/cardback.jpeg");
+    $("#tonecomment").text("自分の出すカードを選択しな");
+    $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
+    $("#kaijicard").show();
+    $("#tonecard").show();
+    $("#c1_btn").hide();
+    $("#SETbtn").text("OPEN");
+    $("#judgment").hide();
+    $("#start_btn").hide();
+    $("#SETbtn").show();
+    $("#cards").hide();
+        //fadeOutできたらsrc変更してfadeIn
+      //   $('#mainImg img').fadeOut(50, function() {
+      //       $('#mainImg img').attr('src', img).on('load', function() {
+      //            $(this).fadeIn();
+      //       })
+      //  })
+  
+    $("#SETbtn").on("click",function(){ //OPENボタン押す
+
+  //PC出手の表示、勝敗を出力
+      if (com==1 || com==2 || com==3 || com==4){
+        // $("#pc_hands").text("CITIZEN");
+        $('#tonecard').attr("src","../img/CITIZEN.png")
+        $('#kaijicard').attr("src","../img/CITIZEN.png")
+        $("#judgment").show();
+        $("#judgment").text("DRAW!");
+        $("#start_btn").show();
+        $("#start_btn").text("カードを再選択");
+        $("#SETbtn").hide();
+        $("#cards").hide();
+        $("#tonecomment").text("命拾いしたな");
+        $("#kaijicomment").text("くっ・・・");
+
+      }
+
+      else if(com==5){
+        // $("#pc_hands").text("Emperor");
+        $('#tonecard').attr("src","../img/SLAVE.png");
+        $('#kaijicard').attr("src","../img/CITIZEN.png");
+        $("#judgment").show();
+        $("#judgment").text("WIN!");
+        $("#kaiji").attr("src","../img/kaiji_win.jpeg");
+        $("#tonegawa").attr("src","../img/tonegawa_lose.jpeg");
+        $("#start_btn").hide();
+        $("#cards").hide();
+        $("#SETbtn").hide();
+        $("#tonecomment").text("なんだと！！");
+        $("#kaijicomment").text("キンキンに冷えてやがる！");
+        $("#REbtn").show();
+      }
+      });
+  });
+});
+
+//-----C2--------------------------------
+$("#c2_btn").on("click",function(){
+
+// 両者カードをセット
+  $("#SETbtn").text("SET");
+  
+
+  $("#SETbtn").on("click",function(){
+
+    $('#kaijicard').attr("src","../img/cardback.jpeg");
+    $('#tonecard').attr("src","../img/cardback.jpeg");
+    $("#kaijicard").show();
+    $("#tonecard").show();
+    $("#c2_btn").hide();
+    $("#SETbtn").text("OPEN");
+    $("#SETbtn").show();
+    $("#judgment").hide();
+    $("#start_btn").hide();
+    $("#tonecomment").text("自分の出すカードを選択しな");
+    $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
+    $("#cards").hide();
+        //fadeOutできたらsrc変更してfadeIn
+      //   $('#mainImg img').fadeOut(50, function() {
+      //       $('#mainImg img').attr('src', img).on('load', function() {
+      //            $(this).fadeIn();
+      //       })
+      //  })
+  
+    $("#SETbtn").on("click",function(){
+
+  //PC出手の表示、勝敗を出力
+      if (com==1 || com==2 || com==3 || com==4){
+        // $("#pc_hands").text("CITIZEN");
+
+        $('#tonecard').attr("src","../img/CITIZEN.png")
+        $('#kaijicard').attr("src","../img/CITIZEN.png")
+        $("#judgment").show();
+        $("#judgment").text("DRAW!");
+        $("#start_btn").show();
+        $("#start_btn").text("カードを再選択");
+        $("#SETbtn").hide();
+        $("#cards").hide();
+        $("#tonecomment").text("命拾いしたな");
+        $("#kaijicomment").text("くっ・・・");
+      }
+
+      else if(com==5){
+        // $("#pc_hands").text("Emperor");
+        $('#tonecard').attr("src","../img/SLAVE.png");
+        $('#kaijicard').attr("src","../img/CITIZEN.png");
+        $("#judgment").show();
+        $("#judgment").text("WIN!");
+        $("#kaiji").attr("src","../img/kaiji_win.jpeg");
+        $("#tonegawa").attr("src","../img/tonegawa_lose.jpeg");
+        $("#start_btn").hide();
+        $("#cards").hide();
+        $("#SETbtn").hide();
+        $("#tonecomment").text("なんだと！！");
+        $("#kaijicomment").text("キンキンに冷えてやがる！");
+        $("#REbtn").show();
+      }
+      });
+  });
+});
+
+
+//-----C3--------------------------------
+$("#c3_btn").on("click",function(){
+
+
+// 両者カードをセット
+  $("#SETbtn").text("SET");
+ 
+  $("#SETbtn").on("click",function(){
+
+    $('#kaijicard').attr("src","../img/cardback.jpeg");
+    $('#tonecard').attr("src","../img/cardback.jpeg");
+    $("#kaijicard").show();
+    $("#tonecard").show();
+    $("#c3_btn").hide();
+    $("#SETbtn").text("OPEN");
+    $("#judgment").hide();
+    $("#start_btn").hide();
+    $("#SETbtn").show();
+    $("#tonecomment").text("自分の出すカードを選択しな");
+    $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
+    $("#cards").hide(); 
+    //fadeOutできたらsrc変更してfadeIn
+      //   $('#mainImg img').fadeOut(50, function() {
+      //       $('#mainImg img').attr('src', img).on('load', function() {
+      //            $(this).fadeIn();
+      //       })
+      //  })
+  
+    $("#SETbtn").on("click",function(){
+
+  //PC出手の表示、勝敗を出力
+      if (com==1 || com==2 || com==3 || com==4){
+        // $("#pc_hands").text("CITIZEN");
+
+        $('#tonecard').attr("src","../img/CITIZEN.png")
+        $('#kaijicard').attr("src","../img/CITIZEN.png")
+        $("#judgment").show();
+        $("#judgment").text("DRAW!");
+        // $("#judgment").attr("class","judged");
+        $("#start_btn").show();
+        $("#start_btn").text("カードを再選択");
+        $("#SETbtn").hide();
+        $("#cards").hide();
+        $("#tonecomment").text("命拾いしたな");
+        $("#kaijicomment").text("くっ・・・");
+      }
+
+      else if(com==5){
+        // $("#pc_hands").text("Emperor");
+        $('#tonecard').attr("src","../img/SLAVE.png");
+        $('#kaijicard').attr("src","../img/CITIZEN.png");
+        $("#judgment").show();
+        $("#judgment").text("WIN!");
+        $("#kaiji").attr("src","../img/kaiji_win.jpeg");
+        $("#tonegawa").attr("src","../img/tonegawa_lose.jpeg");
+        $("#start_btn").hide();
+        $("#cards").hide();
+        $("#SETbtn").hide();
+        $("#tonecomment").text("なんだと！！");
+        $("#kaijicomment").text("キンキンに冷えてやがる！");
+        $("#REbtn").show();
+      }
+      });
+  });
+});
+
+//-----C4--------------------------------
+$("#c4_btn").on("click",function(){
+// 両者カードをセット
+  $("#SETbtn").text("SET");
+ 
+  $("#SETbtn").on("click",function(){
+
+    $('#kaijicard').attr("src","../img/cardback.jpeg");
+    $('#tonecard').attr("src","../img/cardback.jpeg");
+    $("#kaijicard").show();
+    $("#tonecard").show();
+    $("#c4_btn").hide();
+    $("#SETbtn").text("OPEN");
+    $("#judgment").hide();
+    $("#start_btn").hide();
+    $("#SETbtn").show();
+    $("#tonecomment").text("自分の出すカードを選択しな");
+    $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
+    $("#cards").hide(); 
+    //fadeOutできたらsrc変更してfadeIn
+      //   $('#mainImg img').fadeOut(50, function() {
+      //       $('#mainImg img').attr('src', img).on('load', function() {
+      //            $(this).fadeIn();
+      //       })
+      //  })
+  
+    $("#SETbtn").on("click",function(){
+
+  //PC出手の表示、勝敗を出力
+      if (com==1 || com==2 || com==3 || com==4){
+        // $("#pc_hands").text("CITIZEN");
+        $('#tonecard').attr("src","../img/CITIZEN.png")
+        $('#kaijicard').attr("src","../img/CITIZEN.png")
+        $("#judgment").show();
+        $("#judgment").text("DRAW!");
+        $("#start_btn").show();
+        $("#start_btn").text("カードを再選択");
+        $("#SETbtn").hide();
+        $("#cards").hide();
+        $("#tonecomment").text("命拾いしたな");
+        $("#kaijicomment").text("くっ・・・");
+      }
+
+      else if(com==5){
+        // $("#pc_hands").text("Emperor");
+        $('#tonecard').attr("src","../img/SLAVE.png");
+        $('#kaijicard').attr("src","../img/CITIZEN.png");
+        $("#judgment").show();
+        $("#judgment").text("WIN!");
+        $("#kaiji").attr("src","../img/kaiji_win.jpeg");
+        $("#tonegawa").attr("src","../img/tonegawa_lose.jpeg");
+        $("#start_btn").hide();
+        $("#cards").hide();
+        $("#SETbtn").hide();
+        $("#tonecomment").text("なんだと！！");
+        $("#kaijicomment").text("キンキンに冷えてやがる！");
+        $("#REbtn").show();
+      }
+      });
+  });
+});
+
+
+
+//-----SLAVE----------------------------------
+$("#s_btn").on("click",function(){
+// 両者カードをセット
+  $("#SETbtn").text("SET");
+  $("#SETbtn").on("click",function(){
+    $('#kaijicard').attr("src","../img/cardback.jpeg");
+    $('#tonecard').attr("src","../img/cardback.jpeg");
+    $("#kaijicard").show();
+    $("#tonecard").show();
+    $("#s_btn").hide();
+    $("#SETbtn").text("OPEN");
+    $("#judgment").hide();
+    $("#start_btn").hide();
+    $("#SETbtn").show();
+    $("#tonecomment").text("自分の出すカードを選択しな");
+    $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
+    $("#cards").hide();
+    //fadeOutできたらsrc変更してfadeIn
+      //   $('#mainImg img').fadeOut(50, function() {
+      //       $('#mainImg img').attr('src', img).on('load', function() {
+      //            $(this).fadeIn();
+      //       })
+      //  })
+  
+    $("#SETbtn").on("click",function(){
+
+  //PC出手の表示、勝敗を出力
+      if (com==1 || com==2 || com==3 || com==4){
+        // $("#pc_hands").text("CITIZEN");
+
+        $('#tonecard').attr("src","../img/CITIZEN.png")
+        $('#kaijicard').attr("src","../img/Emperor.png")
+        $("#judgment").show();
+        $("#judgment").text("WIN!");
+        $("#kaiji").attr("src","../img/kaiji_win.jpeg");
+        $("#tonegawa").attr("src","../img/tonegawa_lose.jpeg");
+        $("#start_btn").hide();
+        $("#SETbtn").hide();
+        $("#cards").hide();
+        $("#tonecomment").text("なんだと！！");
+        $("#kaijicomment").text("キンキンに冷えてやがる！");
+        $("#REbtn").show();
+      }
+
+      else if(com==5){
+        // $("#pc_hands").text("Emperor");
+        $('#tonecard').attr("src","../img/SLAVE.png");
+        $('#kaijicard').attr("src","../img/Emperor.png");
+        $("#judgment").show();
+        $("#judgment").text("LOSE!");
+        $("#kaiji").attr("src","../img/kaiji_lose.jpeg");
+        $("#tonegawa").attr("src","../img/tonegawa_win.jpeg");
+        $("#start_btn").hide();
+        $("#SETbtn").hide();
+        $("#cards").hide();
+        $("#tonecomment").text("俺の勝ちだ");
+        $("#kaijicomment").text("チクショー");
+        $("#REbtn").show();
+      }
+      });
+  });
+});
+
+
+//-----利根川用カウントアップ----------------------------------
+j=j+1;
+
+$("#REbtn").on("click",function(){
+  location.reload();
+});
+
+
+});
+
+
+</script>
+</body>
+</html>

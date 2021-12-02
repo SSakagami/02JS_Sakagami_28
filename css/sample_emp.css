@@ -1,0 +1,195 @@
+/* body{
+    margin:0;
+    padding:0;
+    text-align:left;
+    font-size: 32px;
+} */
+.header{
+    background-color:black;
+    /* border-bottom: 1px solid #ccc; */
+    text-align: center;
+    font-family: "Bangers", cursive;
+    color: goldenrod;
+    font-size: 40px;
+    margin: 5px;
+}
+/* main{ */
+    /* border-bottom:1px solid #ccc; */
+    /* margin-bottom: 140px; */
+/* } */
+.footer{
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+
+.container{
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.teiai{
+    background-color: #000000;
+    font:20px solid;
+    color: white ;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px dashed white;
+
+}
+
+.teiaitonegawa{
+    font-family: 'Mochiy Pop P One', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ecard{
+    width: 100px;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.22);
+	transition: .3s;
+}
+
+.ecard:hover{
+    /* border: brown solid 1px; */
+    box-shadow: 0 15px 30px -5px rgba(0,0,0,.15), 0 0 5px rgba(0,0,0,.1);
+	transform: translateY(-4px);
+    border:white solid 1px;
+}
+
+.judge{
+    width: 100%;
+    /* padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px; */
+    font-family: "Bangers", cursive;
+    font-size: 50px;
+    text-align: center;
+    /* font-weight: bold; */
+    background-color:red;
+    font: bold gold;
+}
+
+/* .judged{
+    background-color:#305089;
+    width: 100%;
+    font-family: "Bangers", cursive;
+    font-size: 50px;
+    text-align: center;
+} */
+
+
+
+/* .judged{
+    background-color:#305089;
+} */
+
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kuzu{
+    background-color: black;
+    border-top: 1px dashed white;
+    font:18px solid;
+    color: white ;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.kuzukaiji{
+    font-family: 'Mochiy Pop P One', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.SETbutton{
+    width: 280px;
+    background-color: gold;
+    border: gray solid 2px;
+    font: 28px solid;
+    color:black;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
+.SETbutton:hover{
+    background-color: gold;
+    border:firebrick solid 2px;
+    font: 28px solid;
+    color: firebrick;
+}
+
+.picsize{
+    height: auto;
+    width: 300px;
+}
+
+.cardsize{
+    width: 150px;
+}
+
+.teiaifont{
+    font-family: 'Mochiy Pop P One', sans-serif;
+}
+
+
+
+/* p{
+    font-size:200%;
+    text-align: center;
+    border-bottom:1px solid #fff;
+    height:200px;
+} */
+ul{
+    padding: 10px;
+    /* border-top: 1px solid #000000; */
+    display:table;  /* 定義 */
+    table-layout: fixed;
+    width:100%;
+    background-color:gold;
+    margin: 0px;
+}
+li{
+    text-align: center;
+    list-style-type:none;
+    /* border: 1px solid #666; */
+    background-color:gold;
+    display:table-cell;  
+    cursor: pointer;
+}
+/* li:hover{
+    background: #0066CC;
+    color:#fff;
+} */
+
+.footerback{
+    background-color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerfont{
+    font-size: 10px;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}

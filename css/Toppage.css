@@ -1,0 +1,143 @@
+/* body{
+    margin:0;
+    padding:0;
+    text-align:left;
+    font-size: 32px;
+} */
+.header{
+    background-color: #fff;
+    /* border-bottom: 1px solid #ccc; */
+    text-align: center;
+    /* font-family: "Bangers", cursive; */
+    color: firebrick;
+    font-size: 50px;
+    margin: 5px;
+}
+
+.bg-slider {
+	width: 100%;
+	height: 100%;
+    background-image: url(../img/titlekaiji.jpeg);
+    background-repeat: no-repeat;
+	background-position:center;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.bg-slider__title{
+	color: gold;
+	font-size: 48px;
+	line-height: 1.5;
+	font-weight: bold;
+	text-align:center;
+	text-shadow: 1px 5px 5px #000;
+}
+
+
+
+/* main{
+    /* border-bottom:1px solid #ccc; */
+    /* margin-bottom: 140px; */
+    
+.footer{
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+
+.bgcolor{
+    background-color: rgb(41, 40, 40);
+    padding: 20px;
+    padding-bottom: 100px;
+}
+
+.modefonts{
+    text-align: center;
+    font-family: "Bangers", cursive;
+    color: firebrick;
+    font-size: 50px;
+    margin: 5px;
+}
+
+.modefonte{
+    text-align: center;
+    font-family: "Bangers", cursive;
+    color:goldenrod;
+    font-size: 50px;
+    margin: 5px;
+}
+
+.ecard{
+    width: 350px;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.22);
+	transition: .3s;
+}
+
+.ecard:hover{
+    /* border: brown solid 1px; */
+    box-shadow: 0 15px 30px -5px rgba(0,0,0,.15), 0 0 5px rgba(0,0,0,.1);
+	transform: translateY(-15px);
+    border:Black solid 1px;
+}
+
+.modefontr{
+    width: 280px;
+    text-align: center;
+    font-family: "Bangers", cursive;
+    color: #305089;
+    font-size: 50px;
+    margin: 5px;
+    border-bottom: #305089 solid 1px;
+    /* box-shadow: 0 0 3px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.22); */
+	transition: .3s;
+}
+.modefontr:hover{
+    /* border: brown solid 1px; */
+    box-shadow: 0 15px 30px -5px rgba(0,0,0,.15), 0 0 5px rgba(0,0,0,.1);
+	transform: translateY(-15px);
+    border:black solid 1px;
+}
+
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+ul{
+    padding: 10px;
+    /* border-top: 1px solid #000000; */
+    display:table;  /* 定義 */
+    table-layout: fixed;
+    width:100%;
+    /* background-color:#305089; */
+}
+li{
+    text-align: center;
+    list-style-type:none;
+    /* border: 1px solid #666; */
+    /* background-color:#305089; */
+    display:table-cell;  
+    cursor: pointer;
+}
+/* li:hover{
+    background: #0066CC;
+    color:#fff;
+} */
+
+.footerback{
+    background-color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerfont{
+    font-size: 10px;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
