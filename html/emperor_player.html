@@ -43,6 +43,15 @@
   </div>
   <div> <img src="" alt="" id="kaijicard" class=cardsize> </div>
 </div>
+
+<!-- 掛け金入力 -->
+<label class=inputbet> <p class=inputfont>   掛け金：</p>
+
+  <input type="number" id="betmoney" size="40" > 
+  <input type="button" id="bet_btn" value="賭ける">
+  <div id="output-message"></div>
+</label>
+
 <!-- カイジ側手札 -->
 <div>
 <ul id="cards">
@@ -57,18 +66,39 @@
 
 
 
+<!-- ボタン群 -->
 <div class=center><div class=SETbutton id="start_btn"> “Gamestart” </div>   </div>
 <div class=center> <div class=SETbutton id="SETbtn">カードを選択</div> </div>
 <div class=center> <div class=SETbutton id="REbtn">“再戦”</div> </div>
 <!-- <img src="./img/kaiji_lose.jpeg" alt=""> -->
 <!-- <img src="./img/kaiji_win.jpeg" alt=""> -->
 
+<!-- 結果出力 -->
+<table class=recordtable id="list">
+  <!-- ここに追加データが挿入される -->
+  <tr><th>試合数</th><td>勝敗</td><td>獲得金額</td></tr>
+</table>
+
+<div class=inputbet id="destiny">
+<!-- ここに勝敗数と金額を記入 -->
+</div>
+
+<div class="popup">
+<div class=center>
+  <div class="contents">
+    <div> <img id='finalpic' src="" alt=""> </div>
+    <div id='finaljudge'></div>
+    <button id="close">閉じる</button>
+  </div>
+</div>
+</div>
+
 </main>
 
 <footer class=footerback> <div class=footerfont> 本サイトは講習用に作成したものであり、私的利用を目的としています。</div></footer>
 
 <script>
-// 利根川のカードの出す順を決定()-----------------------------
+//-----利根川出す順決定(乱数配列)-----------------------------
 var randoms = [];
 var min = 1, max = 5;
 
@@ -81,7 +111,7 @@ for(i = min; i <= max; i++){
     }
   }
 }
-/** min以上max以下の整数値の乱数を返す */
+
 function intRandom(min, max){
   return Math.floor( Math.random() * (max - min + 1)) + min;
 }
@@ -90,10 +120,81 @@ console.log(randoms);
 
 //------------準備項目----------------------------------
 let j=0;
+let WL=0;
+let count=0;
+let win=0;
+let lose=0;
+let kaijisum=300;
 $("#SETbtn").hide();
 $("#REbtn").hide();
 $("#cards").hide();
 $("#judgment").hide();
+
+//-------結果表示localStorage表示----------------------------------------
+//3.ページ読み込み：保存データ取得表示
+
+for(let k=0; k<localStorage.length; k++){
+    const keya   = k+1
+    var kaijiresults = JSON.parse(localStorage.getItem(keya));
+    if(kaijiresults[0]==1){
+      var kaijiresult="LOSE";
+      var kaijibet= -(kaijiresults[1])*5;
+      lose=lose+1;
+    }
+    else if(kaijiresults[0]==2){
+      var kaijiresult="WIN";
+      var kaijibet= (kaijiresults[1])*5;
+      win=win+1;
+    }
+
+    kaijisum +=kaijibet
+
+    const html = '<tr><th>'+keya+'</th><td>'+kaijiresult+'</td><td>'+kaijibet+'万円</td></tr>';
+    $("#list").append(html);
+    $("#destiny").html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');
+console.log(kaijisum);    
+
+}
+
+if(kaijisum<=0){
+      $('#finalpic').attr("src","../img/kaiji_lose.jpeg");
+      $('#finaljudge').text("完全敗北");
+
+      $('.popup').addClass('show').fadeIn();
+      $('#close').on('click',function(){
+        localStorage.clear();
+        $("#list").empty();
+        location.reload();
+      });
+    }
+else if(kaijisum>=1000){
+      $('#finalpic').attr("src","../img/kaiji_win.jpeg");
+      $('#finaljudge').text("完全勝利");
+      $('.popup').addClass('show').fadeIn();
+      $('#close').on('click',function(){
+        localStorage.clear();
+        $("#list").empty();
+        location.reload();
+      });
+    }
+
+
+//------賭け金設定・表示---------------------------------
+
+$("#output-message").hide();
+$("#start_btn").hide();
+$("#bet_btn").on("click",function(){
+    const betstr = document.getElementById("betmoney");
+    const betvalue = betstr.value;
+    const bet =parseFloat(betvalue);
+    $("#betmoney").hide();
+    $("#bet_btn").hide();
+    console.log(bet);
+    const output = betvalue + "万円";
+    document.getElementById("output-message").innerHTML = output;
+    $("#output-message").show();
+    $("#start_btn").show();
+
 
 //------------Game開始----------------------------------
 $("#start_btn").on("click",function(){//GameStartかカード再選択を押す
@@ -166,6 +267,8 @@ $("#c1_btn").on("click",function(){
         $("#tonecomment").text("なんだと！！");
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
+        WL=2;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -231,6 +334,8 @@ $("#c2_btn").on("click",function(){
         $("#tonecomment").text("なんだと！！");
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
+        WL=2;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -298,6 +403,8 @@ $("#c3_btn").on("click",function(){
         $("#tonecomment").text("なんだと！！");
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
+        WL=2;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -360,6 +467,8 @@ $("#c4_btn").on("click",function(){
         $("#tonecomment").text("なんだと！！");
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
+        WL=2;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -409,6 +518,8 @@ $("#s_btn").on("click",function(){
         $("#tonecomment").text("なんだと！！");
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
+        WL=2;
+        console.log("Consol" + WL);
       }
 
       else if(com==5){
@@ -425,16 +536,32 @@ $("#s_btn").on("click",function(){
         $("#tonecomment").text("俺の勝ちだ");
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
+        WL=1;
+        console.log("Consol" + WL);
       }
       });
   });
 });
 
-
+console.log("Consol" + WL);
 //-----利根川用カウントアップ----------------------------------
 j=j+1;
 
+});
+
+
+
+
+//2.clear クリックイベント
+$("#clear").on("click",function(){
+    localStorage.clear();
+    $("#list").empty();
+});
+
 $("#REbtn").on("click",function(){
+  let key = localStorage.length + 1;
+  const results=[WL,bet];
+  localStorage.setItem(key,JSON.stringify(results));
   location.reload();
 });
 
