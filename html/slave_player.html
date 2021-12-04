@@ -130,6 +130,7 @@ $("#SETbtn").hide();
 $("#REbtn").hide();
 $("#cards").hide();
 $("#judgment").hide();
+// $("#destiny").text('0勝0敗　　　所持金：300万円');
 
 //-------結果表示localStorage表示----------------------------------------
 for(let k=0; k<localStorage.length; k++){
@@ -150,7 +151,7 @@ for(let k=0; k<localStorage.length; k++){
 
     const html = '<tr><th>'+keya+'</th><td>'+kaijiresult+'</td><td>'+kaijibet+'万円</td></tr>';
     $("#list").append(html);
-    $("#destiny").html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');
+    $("#destiny").html(win +'勝'+lose+'敗　　　所持金：'+kaijisum+'万円');
     console.log(kaijisum);    
 
 }
@@ -158,7 +159,7 @@ for(let k=0; k<localStorage.length; k++){
 if(kaijisum<=0){
   $('#finalpic').attr("src","../img/kaiji_lose.jpeg");
   $('#finaljudge').text("完全敗北");
-  $('#finalresult').html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');  
+  $('#finalresult').html(win +'勝'+lose+'敗　　　所持金：'+kaijisum+'万円');  
   $('.popup').addClass('show').fadeIn();
   $('#close').on('click',function(){
     localStorage.clear();
