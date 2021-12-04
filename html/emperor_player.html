@@ -47,9 +47,9 @@
 
 <!-- 掛け金入力 -->
 <label class=inputbet> 
-  <p class=inputfont> 掛け金：</p>
+  <p class=inputfont> 賭け金：</p>
   <input type="number" id="betmoney" size="40" > 
-  <input type="button" id="bet_btn" value="賭ける">
+  <input type="button" id="bet_btn" value="万円賭ける">
   <div id="output-message"></div>
 </label>
 
@@ -160,7 +160,7 @@ if(kaijisum<=0){
   $('#close').on('click',function(){
     localStorage.clear();
     $("#list").empty();
-    location.reload();
+    location.assign('../kaiji.html');
   });
 }
 else if(kaijisum>=1000){
@@ -170,7 +170,7 @@ else if(kaijisum>=1000){
   $('#close').on('click',function(){
     localStorage.clear();
     $("#list").empty();
-    location.reload();
+    location.assign('../kaiji.html');
   });
 }
 
