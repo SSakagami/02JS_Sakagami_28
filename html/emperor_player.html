@@ -85,6 +85,7 @@
     <div class="contents">
       <div> <img id='finalpic' src="" alt=""> </div>
       <div id='finaljudge'></div>
+      <div id='finalresult'></div>
       <button id="close">閉じる</button>
     </div>
   </div>
@@ -156,6 +157,7 @@ for(let k=0; k<localStorage.length; k++){
 if(kaijisum<=0){
   $('#finalpic').attr("src","../img/kaiji_lose.jpeg");
   $('#finaljudge').text("完全敗北");
+  $('#finalresult').html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');  
   $('.popup').addClass('show').fadeIn();
   $('#close').on('click',function(){
     localStorage.clear();
@@ -166,6 +168,7 @@ if(kaijisum<=0){
 else if(kaijisum>=1000){
   $('#finalpic').attr("src","../img/kaiji_win.jpeg");
   $('#finaljudge').text("完全勝利");
+  $('#finalresult').html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');  
   $('.popup').addClass('show').fadeIn();
   $('#close').on('click',function(){
     localStorage.clear();
