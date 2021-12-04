@@ -15,7 +15,6 @@
 
 <header>
   <div class=container>
-    <!-- <div><a href="./kaiji.html"> <img class=titlepic src="./img/titlekaiji.jpeg" alt=""> </a> </div> -->
     <h1 class=header>E-Card Slave mode</h1>
     <div class=header><a href="../kaiji.html">HOME</a></div>
   </div>
@@ -24,20 +23,23 @@
 <main>
 <!-- 帝愛側 -->
 <div class=teiai>  
-  <div class=teiaitonegawa><div>帝愛幹部 利根川</div>
+  <div class=teiaitonegawa>
+    <div>帝愛幹部 利根川</div>
     <div><img class=picsize id="tonegawa" src="../img/tonegawa_draw.jpeg" alt=""> </div>
     <div>「<span id="tonecomment" class=teiaifont>自分の出すカードを選択しな</span>」</div>
   </div>
   <div><img src="" alt="" id="tonecard" class=cardsize></div>
 </div>
-<!-- 結果表示 -->
-<div class=center><div class=judge  id="judgment">  </div>   </div>
 
-<!-- <div class=center><div class=SETbutton id="reload_btn">  </div>   </div> -->
+<!-- 結果表示 -->
+<div class=center>
+  <div class=judge  id="judgment">  </div>   
+</div>
 
 <!-- カイジ -->
 <div class=kuzu>   
-  <div class=kuzukaiji><div>カイジ</div>
+  <div class=kuzukaiji>
+    <div>カイジ</div>
     <div><img id="kaiji" class=picsize src="../img/kaiji_original.jpeg" alt=""> </div>
     <div>「<span id=kaijicomment class=teiaifont>負けられないんだよ、死んだ仲間の分まで</span>」</div>
   </div>
@@ -45,8 +47,8 @@
 </div>
 
 <!-- 掛け金入力 -->
-<label class=inputbet> <p class=inputfont>   掛け金：</p>
-
+<label class=inputbet> 
+  <p class=inputfont>掛け金：</p>
   <input type="number" id="betmoney" size="40" > 
   <input type="button" id="bet_btn" value="賭ける">
   <div id="output-message"></div>
@@ -54,24 +56,19 @@
 
 <!-- カイジ側手札 -->
 <div>
-<ul id="cards" class=tefudaul>
-  <li id="c1_btn" class=tefudali><img src="../img/CITIZEN.png" alt="" class=ecard>
-  </li>
-  <li id="c2_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
-  <li id="s_btn" class=tefudali><img src="../img/SLAVE.png" alt=""class=ecard></li>
-  <li id="c3_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
-  <li id="c4_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
-</ul>
+  <ul id="cards" class=tefudaul>
+    <li id="c1_btn" class=tefudali><img src="../img/CITIZEN.png" alt="" class=ecard></li>
+    <li id="c2_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+    <li id="s_btn" class=tefudali><img src="../img/SLAVE.png" alt=""class=ecard></li>
+    <li id="c3_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+    <li id="c4_btn" class=tefudali><img src="../img/CITIZEN.png" alt=""class=ecard></li>
+  </ul>
 </div>
-
-
 
 <!-- ボタン群 -->
 <div class=center><div class=SETbutton id="start_btn"> “Gamestart” </div>   </div>
 <div class=center> <div class=SETbutton id="SETbtn">カードを選択</div> </div>
 <div class=center> <div class=SETbutton id="REbtn">“再戦”</div> </div>
-<!-- <img src="./img/kaiji_lose.jpeg" alt=""> -->
-<!-- <img src="./img/kaiji_win.jpeg" alt=""> -->
 
 <!-- 結果出力 -->
 <table class=recordtable id="list">
@@ -82,7 +79,8 @@
 <div class=inputbet id="destiny">
   <!-- ここに勝敗数と金額を記入 -->
 </div>
- 
+
+ <!-- ポップアップ表示 -->
 <div class="popup">
   <div class=center>
     <div class="contents">
@@ -95,7 +93,9 @@
 
 </main>
 
-<footer class=footerback> <div class=footerfont> 本サイトは講習用に作成したものであり、私的利用を目的としています。</div></footer>
+<footer class=footerback>
+  <div class=footerfont> 本サイトは講習用に作成したものであり、私的利用を目的としています。</div>
+</footer>
 
 <script>
 //-----利根川出す順決定(乱数配列)-----------------------------
@@ -125,15 +125,12 @@ let count=0;
 let win=0;
 let lose=0;
 let kaijisum=300;
-// let bet;
 $("#SETbtn").hide();
 $("#REbtn").hide();
 $("#cards").hide();
 $("#judgment").hide();
 
 //-------結果表示localStorage表示----------------------------------------
-//3.ページ読み込み：保存データ取得表示
-
 for(let k=0; k<localStorage.length; k++){
     const keya   = k+1
     var kaijiresults = JSON.parse(localStorage.getItem(keya));
@@ -153,31 +150,30 @@ for(let k=0; k<localStorage.length; k++){
     const html = '<tr><th>'+keya+'</th><td>'+kaijiresult+'</td><td>'+kaijibet+'万円</td></tr>';
     $("#list").append(html);
     $("#destiny").html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');
-console.log(kaijisum);    
+    console.log(kaijisum);    
 
 }
 
 if(kaijisum<=0){
-      $('#finalpic').attr("src","../img/kaiji_lose.jpeg");
-      $('#finaljudge').text("完全敗北");
-
-      $('.popup').addClass('show').fadeIn();
-      $('#close').on('click',function(){
-        localStorage.clear();
-        $("#list").empty();
-        location.reload();
-      });
-    }
+  $('#finalpic').attr("src","../img/kaiji_lose.jpeg");
+  $('#finaljudge').text("完全敗北");
+  $('.popup').addClass('show').fadeIn();
+  $('#close').on('click',function(){
+    localStorage.clear();
+    $("#list").empty();
+    location.reload();
+  });
+}
 else if(kaijisum>=1000){
-      $('#finalpic').attr("src","../img/kaiji_win.jpeg");
-      $('#finaljudge').text("完全勝利");
-      $('.popup').addClass('show').fadeIn();
-      $('#close').on('click',function(){
-        localStorage.clear();
-        $("#list").empty();
-        location.reload();
-      });
-    }
+  $('#finalpic').attr("src","../img/kaiji_win.jpeg");
+  $('#finaljudge').text("完全勝利");  
+  $('.popup').addClass('show').fadeIn();
+  $('#close').on('click',function(){
+    localStorage.clear();
+    $("#list").empty();
+    location.reload();
+  });
+}
 
 
 //------賭け金設定・表示---------------------------------
@@ -185,17 +181,17 @@ else if(kaijisum>=1000){
 $("#output-message").hide();
 $("#start_btn").hide();
 
-  $("#bet_btn").on("click",function(){
-    const betstr = document.getElementById("betmoney");
-    const betvalue = betstr.value;
-    const bet =parseFloat(betvalue);
-    $("#betmoney").hide();
-    $("#bet_btn").hide();
-    console.log(bet);
-    const output = betvalue + "万円";
-    document.getElementById("output-message").innerHTML = output;
-    $("#output-message").show();
-    $("#start_btn").show();
+$("#bet_btn").on("click",function(){
+  const betstr = document.getElementById("betmoney");
+  const betvalue = betstr.value;
+  const bet =parseFloat(betvalue);
+  $("#betmoney").hide();
+  $("#bet_btn").hide();
+  console.log(bet);
+  const output = betvalue + "万円";
+  document.getElementById("output-message").innerHTML = output;
+  $("#output-message").show();
+  $("#start_btn").show();
 
 //------------Game開始----------------------------------
 $("#start_btn").on("click",function(){//GameStartかカード再選択を押す
@@ -230,18 +226,11 @@ $("#c1_btn").on("click",function(){
     $("#start_btn").hide();
     $("#SETbtn").show();
     $("#cards").hide();
-        //fadeOutできたらsrc変更してfadeIn
-      //   $('#mainImg img').fadeOut(50, function() {
-      //       $('#mainImg img').attr('src', img).on('load', function() {
-      //            $(this).fadeIn();
-      //       })
-      //  })
   
     $("#SETbtn").on("click",function(){ //OPENボタン押す
 
   //PC出手の表示、勝敗を出力
       if (com==1 || com==2 || com==3 || com==4){
-        // $("#pc_hands").text("CITIZEN");
         $('#tonecard').attr("src","../img/CITIZEN.png")
         $('#kaijicard').attr("src","../img/CITIZEN.png")
         $("#judgment").show();
@@ -252,11 +241,9 @@ $("#c1_btn").on("click",function(){
         $("#cards").hide();
         $("#tonecomment").text("命拾いしたな");
         $("#kaijicomment").text("くっ・・・");
-
       }
 
       else if(com==5){
-        // $("#pc_hands").text("Emperor");
         $('#tonecard').attr("src","../img/Emperor.png");
         $('#kaijicard').attr("src","../img/CITIZEN.png");
         $("#judgment").show();
@@ -282,9 +269,7 @@ $("#c2_btn").on("click",function(){
 // 両者カードをセット
   $("#SETbtn").text("SET");
   
-
   $("#SETbtn").on("click",function(){
-
     $('#kaijicard').attr("src","../img/cardback.jpeg");
     $('#tonecard').attr("src","../img/cardback.jpeg");
     $("#kaijicard").show();
@@ -297,20 +282,11 @@ $("#c2_btn").on("click",function(){
     $("#tonecomment").text("自分の出すカードを選択しな");
     $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
     $("#cards").hide();
-
-        //fadeOutできたらsrc変更してfadeIn
-      //   $('#mainImg img').fadeOut(50, function() {
-      //       $('#mainImg img').attr('src', img).on('load', function() {
-      //            $(this).fadeIn();
-      //       })
-      //  })
   
     $("#SETbtn").on("click",function(){
 
   //PC出手の表示、勝敗を出力
       if (com==1 || com==2 || com==3 || com==4){
-        // $("#pc_hands").text("CITIZEN");
-
         $('#tonecard').attr("src","../img/CITIZEN.png")
         $('#kaijicard').attr("src","../img/CITIZEN.png")
         $("#judgment").show();
@@ -324,7 +300,6 @@ $("#c2_btn").on("click",function(){
       }
 
       else if(com==5){
-        // $("#pc_hands").text("Emperor");
         $('#tonecard').attr("src","../img/Emperor.png");
         $('#kaijicard').attr("src","../img/CITIZEN.png");
         $("#judgment").show();
@@ -352,7 +327,6 @@ $("#c3_btn").on("click",function(){
   $("#SETbtn").text("SET");
  
   $("#SETbtn").on("click",function(){
-
     $('#kaijicard').attr("src","../img/cardback.jpeg");
     $('#tonecard').attr("src","../img/cardback.jpeg");
     $("#kaijicard").show();
@@ -365,24 +339,16 @@ $("#c3_btn").on("click",function(){
     $("#tonecomment").text("自分の出すカードを選択しな");
     $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
     $("#cards").hide(); 
-    //fadeOutできたらsrc変更してfadeIn
-      //   $('#mainImg img').fadeOut(50, function() {
-      //       $('#mainImg img').attr('src', img).on('load', function() {
-      //            $(this).fadeIn();
-      //       })
-      //  })
+
   
     $("#SETbtn").on("click",function(){
 
   //PC出手の表示、勝敗を出力
       if (com==1 || com==2 || com==3 || com==4){
-        // $("#pc_hands").text("CITIZEN");
-
         $('#tonecard').attr("src","../img/CITIZEN.png")
         $('#kaijicard').attr("src","../img/CITIZEN.png")
         $("#judgment").show();
         $("#judgment").text("DRAW!");
-        // $("#judgment").attr("class","judged");
         $("#start_btn").show();
         $("#start_btn").text("カードを再選択");
         $("#SETbtn").hide();
@@ -392,7 +358,6 @@ $("#c3_btn").on("click",function(){
       }
 
       else if(com==5){
-        // $("#pc_hands").text("Emperor");
         $('#tonecard').attr("src","../img/Emperor.png");
         $('#kaijicard').attr("src","../img/CITIZEN.png");
         $("#judgment").show();
@@ -418,7 +383,6 @@ $("#c4_btn").on("click",function(){
   $("#SETbtn").text("SET");
  
   $("#SETbtn").on("click",function(){
-
     $('#kaijicard').attr("src","../img/cardback.jpeg");
     $('#tonecard').attr("src","../img/cardback.jpeg");
     $("#kaijicard").show();
@@ -430,19 +394,12 @@ $("#c4_btn").on("click",function(){
     $("#SETbtn").show();
     $("#tonecomment").text("自分の出すカードを選択しな");
     $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
-    $("#cards").hide(); 
-    //fadeOutできたらsrc変更してfadeIn
-      //   $('#mainImg img').fadeOut(50, function() {
-      //       $('#mainImg img').attr('src', img).on('load', function() {
-      //            $(this).fadeIn();
-      //       })
-      //  })
+    $("#cards").hide();
   
     $("#SETbtn").on("click",function(){
 
   //PC出手の表示、勝敗を出力
       if (com==1 || com==2 || com==3 || com==4){
-        // $("#pc_hands").text("CITIZEN");
         $('#tonecard').attr("src","../img/CITIZEN.png")
         $('#kaijicard').attr("src","../img/CITIZEN.png")
         $("#judgment").show();
@@ -456,7 +413,6 @@ $("#c4_btn").on("click",function(){
       }
 
       else if(com==5){
-        // $("#pc_hands").text("Emperor");
         $('#tonecard').attr("src","../img/Emperor.png");
         $('#kaijicard').attr("src","../img/CITIZEN.png");
         $("#judgment").show();
@@ -493,19 +449,11 @@ $("#s_btn").on("click",function(){
     $("#tonecomment").text("自分の出すカードを選択しな");
     $("#kaijicomment").text("負けられないんだよ、死んだ仲間の分まで");
     $("#cards").hide();
-    //fadeOutできたらsrc変更してfadeIn
-      //   $('#mainImg img').fadeOut(50, function() {
-      //       $('#mainImg img').attr('src', img).on('load', function() {
-      //            $(this).fadeIn();
-      //       })
-      //  })
   
     $("#SETbtn").on("click",function(){
 
   //PC出手の表示、勝敗を出力
       if (com==1 || com==2 || com==3 || com==4){
-        // $("#pc_hands").text("CITIZEN");
-
         $('#tonecard').attr("src","../img/CITIZEN.png")
         $('#kaijicard').attr("src","../img/SLAVE.png")
         $("#judgment").show();
@@ -523,7 +471,6 @@ $("#s_btn").on("click",function(){
       }
 
       else if(com==5){
-        // $("#pc_hands").text("Emperor");
         $('#tonecard').attr("src","../img/Emperor.png");
         $('#kaijicard').attr("src","../img/SLAVE.png");
         $("#judgment").show();
@@ -543,37 +490,12 @@ $("#s_btn").on("click",function(){
   });
 });
 
-
 console.log("Consol" + WL);
-
-
 //-----利根川用カウントアップ----------------------------------
 j=j+1;
 
-// });  
-
-//1.Save クリックイベント
-//格納したいもの key : ＊回戦、Value : 勝ち負け(WL) 掛け金(bet)
-// 表示したいもの *回戦、勝ち負け、勝利金額、現存金額
-// $("#save").on("click",function(){
-// console.log("CLICK!!");
-//     let key = localStorage.length + 1;
-//     // const value = $("#bet_money").val();
-//     const results=[WL,bet];
-//     localStorage.setItem(key,JSON.stringify(results));
-    // const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
-    // $("#list").append(html);
-
 });
 
-
-
-
-//2.clear クリックイベント
-$("#clear").on("click",function(){
-    localStorage.clear();
-    $("#list").empty();
-});
 
 $("#REbtn").on("click",function(){
   let key = localStorage.length + 1;
@@ -583,15 +505,7 @@ $("#REbtn").on("click",function(){
 });
 
 
-
-
 });
-
-
-
-
-
-
 
 </script>
 
