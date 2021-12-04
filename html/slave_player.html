@@ -55,15 +55,25 @@
 </ul>
 </div>
 
+<!-- 掛け金入力 -->
+<label class=center>掛け金：
+  <input type="number" id="betmoney" size="40" > 
+  <input type="button" id="bet_btn" value="賭ける">
+  <div id="output-message"></div>
+</label>
+<!-- 掛け金出力 -->
+<!-- <p class=center id="output-message"></p> -->
 
+<!-- <input type="button" id="bet_btn" value="ボタン" > -->
 
+<!-- ボタン群 -->
 <div class=center><div class=SETbutton id="start_btn"> “Gamestart” </div>   </div>
 <div class=center> <div class=SETbutton id="SETbtn">カードを選択</div> </div>
 <div class=center> <div class=SETbutton id="REbtn">“再戦”</div> </div>
 <!-- <img src="./img/kaiji_lose.jpeg" alt=""> -->
 <!-- <img src="./img/kaiji_win.jpeg" alt=""> -->
 
-勝敗
+<!-- サンプルコード -->
 <input class=inputform type="text" id="key">
 <textarea class=inputtextarea id="memo"></textarea>
 <ul class=resultul>
@@ -73,7 +83,7 @@
 
 <table class=recordtable id="list">
   <!-- ここに追加データが挿入される -->
-  </table>
+</table>
 
 
 </main>
@@ -103,13 +113,32 @@ console.log(randoms);
 
 //------------準備項目----------------------------------
 let j=0;
+let WL=0;
+let count=0;
+// let bet;
 $("#SETbtn").hide();
 $("#REbtn").hide();
 $("#cards").hide();
 $("#judgment").hide();
 
+//------賭け金設定・表示---------------------------------
+$("#output-message").hide();
+  $("#bet_btn").on("click",function(){
+    const betstr = document.getElementById("betmoney");
+    const betvalue = betstr.value;
+    const bet =parseFloat(betvalue);
+    $("#betmoney").hide();
+    $("#bet_btn").hide();
+    console.log(bet);
+    const output = betvalue + "万円";
+    document.getElementById("output-message").innerHTML = output;
+    $("#output-message").show();
+
+
+
 //------------Game開始----------------------------------
 $("#start_btn").on("click",function(){//GameStartかカード再選択を押す
+  
   $("#start_btn").hide();
   let com = randoms[j]; //利根川手札をセット
   console.log(com);
@@ -179,6 +208,8 @@ $("#c1_btn").on("click",function(){
         $("#tonecomment").text("俺の勝ちだ");
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
+        WL=1;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -245,6 +276,8 @@ $("#c2_btn").on("click",function(){
         $("#tonecomment").text("俺の勝ちだ");
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
+        WL=1;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -311,6 +344,8 @@ $("#c3_btn").on("click",function(){
         $("#tonecomment").text("俺の勝ちだ");
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
+        WL=1;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -373,6 +408,8 @@ $("#c4_btn").on("click",function(){
         $("#tonecomment").text("俺の勝ちだ");
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
+        WL=1;
+        console.log("Consol" + WL);
       }
       });
   });
@@ -420,6 +457,8 @@ $("#s_btn").on("click",function(){
         $("#tonecomment").text("俺の勝ちだ");
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
+        WL=1;
+        console.log("Consol" + WL);
       }
 
       else if(com==5){
@@ -436,20 +475,34 @@ $("#s_btn").on("click",function(){
         $("#tonecomment").text("なんだと！！");
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
+        WL=2;
+        console.log("Consol" + WL);
       }
       });
   });
 });
 
 
+console.log("Consol" + WL);
+
+
+//-----利根川用カウントアップ----------------------------------
+j=j+1;
+
+
+});  
+
 //1.Save クリックイベント
+//格納したいもの key : ＊回戦、Value : 勝ち負け(WL) 掛け金(bet)
+// 表示したいもの *回戦、勝ち負け、勝利金額、現存金額
 $("#save").on("click",function(){
 console.log("CLICK!!");
-    const key = $("#key").val();
-    const value = $("#memo").val();
-    localStorage.setItem(key,value);
-    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
-    $("#list").append(html);
+    let key = localStorage.length + 1;
+    // const value = $("#bet_money").val();
+    const results=[WL,bet];
+    localStorage.setItem(key,JSON.stringify(results));
+    // const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
+    // $("#list").append(html);
 });
 
 //2.clear クリックイベント
@@ -459,51 +512,23 @@ $("#clear").on("click",function(){
 });
 
 //3.ページ読み込み：保存データ取得表示
-for(let i=0; i<localStorage.length; i++){
-    const key   = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
-    $("#list").append(html);
-}
+// for(let i=0; i<localStorage.length; i++){
+//     const key   = localStorage.key(i);
+//     const value = localStorage.getItem(key);
+//     const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
+//     $("#list").append(html);
+// }
 
-//-----利根川用カウントアップ----------------------------------
-j=j+1;
+
+});
+
+
 
 $("#REbtn").on("click",function(){
   location.reload();
 });
 
 
-});
-
-
-
-</script>
-
-<script>
-//1.Save クリックイベント
-$("#save").on("click",function(){
-console.log("CLICK!!");
-    const key = $("#key").val();
-    const value = $("#memo").val();
-    localStorage.setItem(key,value);
-    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
-    $("#list").append(html);
-});
-
-//2.clear クリックイベント
-$("#clear").on("click",function(){
-    localStorage.clear();
-    $("#list").empty();
-});
-
-//3.ページ読み込み：保存データ取得表示
-for(let i=0; i<localStorage.length; i++){
-    const key   = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>';
-    $("#list").append(html);
-}
 
 </script>
 
