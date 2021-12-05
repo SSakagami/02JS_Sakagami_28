@@ -72,7 +72,7 @@
 <!-- 結果出力 -->
 <table class=recordtable id="list">
   <!-- ここに追加データが挿入される -->
-  <tr><th>試合数</th><td>勝敗</td><td>獲得金額</td></tr>
+  <tr><th>試合数</th><td>奴隷/皇帝</td><td>勝敗</td><td>賭け金</td><td>獲得金額</td></tr>
 </table>
 
 <div class=inputbet id="destiny">
@@ -125,29 +125,48 @@ let count=0;
 let win=0;
 let lose=0;
 let kaijisum=300;
+var SE;
 $("#SETbtn").hide();
 $("#REbtn").hide();
 $("#cards").hide();
 $("#judgment").hide();
+$("#destiny").text('0勝0敗　　　所持金：300万円');
 
 //-------結果表示localStorage表示----------------------------------------
 for(let k=0; k<localStorage.length; k++){
     const keya   = k+1
     var kaijiresults = JSON.parse(localStorage.getItem(keya));
-    if(kaijiresults[0]==1){
+    if(kaijiresults[1]==1){
       var kaijiresult="LOSE";
-      var kaijibet= -(kaijiresults[1])*5;
+      var kaijikake = kaijiresults[2];
       lose=lose+1;
+      if(kaijiresults[0]==1){
+        var kaijiteam="SLAVE";
+        var kaijibet= -(kaijiresults[2]);
+      }
+      else if(kaijiresults[0]==2){
+        var kaijiteam="EMPEROR";
+        var kaijibet= -(kaijiresults[2])*5;
+      }
     }
-    else if(kaijiresults[0]==2){
+    else if(kaijiresults[1]==2){
       var kaijiresult="WIN";
-      var kaijibet= (kaijiresults[1])*5;
+      var kaijikake = kaijiresults[2];
+      var kaijibet= (kaijiresults[2]);
       win=win+1;
+      if(kaijiresults[0]==1){
+        var kaijiteam="SLAVE";
+        var kaijibet= (kaijiresults[2])*5;
+      }
+      else if(kaijiresults[0]==2){
+        var kaijiteam="EMPEROR";
+        var kaijibet= (kaijiresults[2]);
+      }
     }
 
     kaijisum +=kaijibet
 
-    const html = '<tr><th>'+keya+'</th><td>'+kaijiresult+'</td><td>'+kaijibet+'万円</td></tr>';
+    const html = '<tr><th>'+keya+'</th><td>'+kaijiteam+'</td><td>'+kaijiresult+'</td><td>'+kaijikake+'万円</td><td>'+kaijibet+'万円</td></tr>';
     $("#list").append(html);
     $("#destiny").html(win +'勝'+lose+'敗　    　　所持金：'+kaijisum+'万円');
     console.log(kaijisum);    
@@ -259,6 +278,7 @@ $("#c1_btn").on("click",function(){
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
         WL=2;
+        SE=2;
         console.log("Consol" + WL);
       }
       });
@@ -317,6 +337,7 @@ $("#c2_btn").on("click",function(){
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
         WL=2;
+        SE=2;
         console.log("Consol" + WL);
       }
       });
@@ -376,6 +397,7 @@ $("#c3_btn").on("click",function(){
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
         WL=2;
+        SE=2;
         console.log("Consol" + WL);
       }
       });
@@ -432,6 +454,7 @@ $("#c4_btn").on("click",function(){
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
         WL=2;
+        SE=2;
         console.log("Consol" + WL);
       }
       });
@@ -475,6 +498,7 @@ $("#s_btn").on("click",function(){
         $("#kaijicomment").text("キンキンに冷えてやがる！");
         $("#REbtn").show();
         WL=2;
+        SE=2;
         console.log("Consol" + WL);
       }
 
@@ -492,6 +516,7 @@ $("#s_btn").on("click",function(){
         $("#kaijicomment").text("チクショー");
         $("#REbtn").show();
         WL=1;
+        SE=2;
         console.log("Consol" + WL);
       }
       });
@@ -506,9 +531,9 @@ j=j+1;
 
 $("#REbtn").on("click",function(){
   let key = localStorage.length + 1;
-  const results=[WL,bet];
+  const results=[SE,WL,bet];
   localStorage.setItem(key,JSON.stringify(results));
-  location.reload();
+  location.assign('./slave_player.html');
 });
 
 
